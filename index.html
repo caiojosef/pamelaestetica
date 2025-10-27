@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estética Pâmela Guimarães</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Lista de serviços e agendamento via WhatsApp." />
+</head>
+<body>
+  <!-- Header / Logo -->
+  <header class="site-header">
+    <div class="brand">
+      <!-- troque o src pelo seu arquivo -->
+      <img src="logo.png" alt="Estética Pâmela Guimarães" />
+      <div class="brand-text">
+        <h1>Estética Pâmela Guimarães</h1>
+        <p>Beleza, cuidado e bem-estar</p>
+      </div>
+    </div>
+    <!-- <nav class="nav">
+      <a href="#depilacao">Depilação</a>
+      <a href="#depilacao-home">Depilação Home Care</a>
+      <a href="#facial">Estética Facial</a>
+      <a href="#corporal">Estética Corporal</a>
+      <a href="#sessoes-drenagem">Sessões de Drenagem</a>
+      <a href="#drenagem-home">Drenagem Linfática Home Care</a>
+    </nav> -->
+  </header>
+
+  <main id="app" class="container">
+    <!-- As seções são geradas via JS a partir do catálogo -->
+  </main>
+
+  <!-- Carrinho fixo -->
+  <footer class="cart-bar" id="cartBar" aria-live="polite">
+    <div class="cart-info">
+      <strong id="cartCount">0</strong> item(s) — <span id="cartTotal">R$ 0,00</span>
+    </div>
+    <div class="cart-actions">
+      <button id="btnViewCart" class="btn ghost">ver itens</button>
+      <button id="btnClearCart" class="btn danger">limpar</button>
+      <button id="btnCheckout" class="btn primary">finalizar no WhatsApp</button>
+    </div>
+  </footer>
+
+  <!-- Modal simples para listar itens do carrinho -->
+  <dialog id="cartDialog">
+    <h3>Seu carrinho</h3>
+    <div id="cartList"></div>
+    <div class="dialog-actions">
+      <button id="closeDialog" class="btn ghost">fechar</button>
+    </div>
+  </dialog>
+
+  <script src="scripts.js" defer></script>
+</body>
+</html>
