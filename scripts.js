@@ -1,277 +1,152 @@
 /* =================== CONFIG =================== */
-const WHATSAPP_NUMBER = "5516997745915"; // edite aqui (só dígitos)
-const CART_KEY = "epg_cart";
-
-/* =================== UTIL =================== */
+const WHATSAPP_NUMBER = "5516999999999"; // edite (somente dígitos)
 const BRL = v => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 const enc = encodeURIComponent;
 
-/* =================== CATÁLOGO =================== */
-/* Mantemos os vetores; o JS apenas preenche os nós do HTML já existentes. */
-const CATALOG = [
-    {
-        id: "depilacao",
-        title: "Depilação",
-        items: [
-            ["Antebraço", 30],
-            ["Axila", 30],
-            ["Braço", 40],
-            ["Buço", 20],
-            ["Meia Perna", 30],
-            ["Nariz", 15],
-            ["Perna Inteira", 60],
-            ["Rosto Completo", 35],
-            ["Virilha Cavada e Canal", 45],
-            ["Virilha Simples", 20],
-            ["Virilha Total e Canal", 50],
-        ]
-    },
-    {
-        id: "depilacao-home",
-        title: "Depilação Home Care",
-        
-        items: [
-            ["Antebraço", 40],
-            ["Axila", 40],
-            ["Braço", 30],
-            ["Buço", 30],
-            ["Meia Perna", 35],
-            ["Nariz", 15],
-            ["Perna Inteira", 70],
-            ["Rosto Completo", 40],
-            ["Virilha Cavada e Canal", 50],
-            ["Virilha Simples", 30],
-            ["Virilha Total e Canal", 60],
-        ]
-    },
-    {
-        id: "facial",
-        title: "Estética Facial",
-        note: "",
-        items: [
-            ["Hidratação Facial", 95],
-            ["Limpeza de Pele", 120],
-        ]
-    },
-    {
-        id: "corporal",
-        title: "Estética Corporal",
-        note: "",
-        items: [
-            ["Drenagem Linfática Corporal", 110],
-            ["Drenagem Linfática Facial", 90],
-            ["Massagem com Bambu", 100],
-            ["Massagem com Pedras Quentes", 110],
-            ["Massagem Modeladora", 180],
-            ["Massagem Relaxante", 100],
-        ]
-    },
-    {
-        id: "sessoes-drenagem",
-        title: "Sessões de Drenagem",
-        note: "",
-        items: [
-            ["2 Sessões", 220],
-            ["4 Sessões", 440],
-            ["8 Sessões", 880],
-            ["10 Sessões", 1100],
-        ],
-        footnote: "Fechando o pacote com 10 sessões, ganha desconto de R$ 110,00 no pagamento via Pix ou cartão."
-    },
-    {
-        id: "drenagem-home",
-        title: "Drenagem Linfática Home Care",
-        note: "Atendimento em domicílio",
-        items: [
-            ["Avulsa", 130],
-            ["2 Sessões", 260],
-            ["4 Sessões", 520],
-            ["8 Sessões", 1040],
-            ["10 Sessões", 1300],
-        ]
-    },
-];
+/* =================== CATÁLOGO (VETORES) =================== */
+/* Fácil de editar. Cada entrada: [nome, preco] */
+const PRICE = {
+    depilacao: [
+        ["Ante Braço", 30], ["Axila", 30], ["Braço", 40], ["Buço", 20],
+        ["Meia Perna", 30], ["Nariz", 15], ["Perna Inteira", 60],
+        ["Rosto Completo", 35], ["Virilha Cavada e Canal", 45],
+        ["Virilha Simples", 20], ["Virilha Total e Canal", 50]
+    ],
+    "depilacao-home": [
+        ["Antebraço", 40], ["Axila", 40], ["Braço", 30], ["Buço", 30],
+        ["Meia Perna", 35], ["Nariz", 15], ["Perna Inteira", 70],
+        ["Rosto Completo", 40], ["Virilha Cavada e Canal", 50],
+        ["Virilha Simples", 30], ["Virilha Total e Canal", 60]
+    ],
+    facial: [
+        ["Hidratação Facial", 95], ["Limpeza de Pele", 120]
+    ],
+    corporal: [
+        ["Drenagem Linfática Corporal", 110], ["Drenagem Linfática Facial", 90],
+        ["Massagem com Bambu", 100], ["Massagem com Pedras Quentes", 110],
+        ["Massagem Modeladora", 180], ["Massagem Relaxante", 100]
+    ],
+    "sessoes-drenagem": [
+        ["2 Sessões", 220], ["4 Sessões", 440], ["8 Sessões", 880], ["10 Sessões", 1100]
+    ],
+    "drenagem-home": [
+        ["Avulsa", 130], ["2 Sessões", 260], ["4 Sessões", 520],
+        ["8 Sessões", 1040], ["10 Sessões", 1300]
+    ],
+};
 
-/* =================== CARRINHO =================== */
-function readCart() { try { return JSON.parse(sessionStorage.getItem(CART_KEY) || "[]"); } catch { return []; } }
-function writeCart(items) { sessionStorage.setItem(CART_KEY, JSON.stringify(items)); refreshBar(); }
-function addToCart(item) { const it = readCart(); it.push({ ...item, ts: Date.now() }); writeCart(it); pulseBar(); }
-function removeFromCart(ts) { writeCart(readCart().filter(i => i.ts !== ts)); }
-function clearCart() { writeCart([]); }
-const cartTotal = items => items.reduce((s, i) => s + i.price, 0);
+/* =================== MODAL ELEMENTOS =================== */
+const dlg = document.getElementById("serviceDialog");
+const listEl = document.getElementById("svcList");
+const titleEl = document.getElementById("svcTitle");
+const totalEl = document.getElementById("svcTotal");
+const btnClose = document.querySelector(".svc-close");
+const btnCancel = document.getElementById("svcCancel");
+const btnSubmit = document.getElementById("svcSubmit");
 
-/* =================== WHATSAPP =================== */
+/* Estado atual do formulário */
+let CURRENT_SECTION_ID = null;
+let CURRENT_SECTION_LABEL = null;
+
+/* =================== UTIL =================== */
 function buildWhatsLink(message) {
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${enc(message)}`;
 }
-function checkout() {
-    const items = readCart();
-    if (!items.length) return alert("Seu carrinho está vazio.");
-    const by = {};
-    items.forEach(i => { (by[i.section] ??= []).push(i); });
-    const lines = ["Olá! Gostaria de solicitar os seguintes serviços:"];
-    Object.entries(by).forEach(([sec, arr]) => {
-        lines.push(`\n${sec}:`);
-        arr.forEach(i => lines.push(`• ${i.name} — ${BRL(i.price)}`));
+function calcTotal() {
+    let sum = 0;
+    listEl.querySelectorAll('input[type="checkbox"]:checked').forEach(chk => {
+        sum += parseFloat(chk.dataset.price);
     });
-    lines.push(`\nTotal: ${BRL(cartTotal(items))}`);
-    window.open(buildWhatsLink(lines.join("\n")), "_blank", "noopener");
+    totalEl.textContent = BRL(sum);
+    return sum;
 }
-
-/* =================== BARRA/MODAL =================== */
-const cartCount = document.getElementById("cartCount");
-const cartTotalEl = document.getElementById("cartTotal");
-const btnCheckout = document.getElementById("btnCheckout");
-const btnViewCart = document.getElementById("btnViewCart");
-const btnClearCart = document.getElementById("btnClearCart");
-const dialog = document.getElementById("cartDialog");
-const cartList = document.getElementById("cartList");
-const closeDialog = document.getElementById("closeDialog");
-
-function refreshBar() {
-    const items = readCart();
-    cartCount.textContent = items.length.toString();
-    cartTotalEl.textContent = BRL(cartTotal(items));
-}
-function pulseBar() {
-    const bar = document.getElementById("cartBar");
-    bar.animate([{ boxShadow: "0 0 0 0 rgba(110,84,255,0)" }, { boxShadow: "0 0 0 14px rgba(110,84,255,.18)" }], { duration: 350, easing: "ease-out" });
-}
-function openCartDialog() {
-    const items = readCart();
-    cartList.innerHTML = "";
-    if (!items.length) {
-        cartList.innerHTML = "<p style='color:#5e5b78'>Seu carrinho está vazio.</p>";
-    } else {
-        items.forEach(i => {
-            const row = document.createElement("div");
-            row.className = "cart-row";
-            row.innerHTML = `
-        <div>${i.section} — <strong>${i.name}</strong></div>
-        <div>${BRL(i.price)}</div>
-        <button class="remove">remover</button>
-      `;
-            row.querySelector(".remove").onclick = () => { removeFromCart(i.ts); openCartDialog(); };
-            cartList.appendChild(row);
-        });
-    }
-    dialog.showModal();
-}
-
-/* =================== PREENCHIMENTO DAS SEÇÕES =================== */
-/* HTML já existe; aqui só injetamos as linhas a partir do template */
-const rowTpl = document.getElementById("item-row-template");
-
-function mountSections() {
-    CATALOG.forEach(sec => {
-        const root = document.querySelector(`[data-section="${sec.id}"]`);
-        if (!root) return;
-
-        // título do h2 (mantém o texto do HTML, mas podemos sincronizar)
-        const h2 = root.querySelector("h2 span");
-        if (h2) h2.textContent = sec.title;
-
-        // lista
-        const list = root.querySelector("[data-list]");
-        list.innerHTML = ""; // limpa para repintar com o template
-
-        sec.items.forEach(([name, price]) => {
-            const frag = rowTpl.content.cloneNode(true);
-            const el = frag.querySelector(".item");
-            el.querySelector(".item-name").textContent = name;
-            el.querySelector(".item-price").textContent = BRL(price);
-
-            const btnAdd = el.querySelector(".icon-btn.add");
-            btnAdd.onclick = () => addToCart({ section: sec.title, name, price });
-
-            const aWhats = el.querySelector(".icon-btn.whats");
-            aWhats.href = buildWhatsLink(
-                `Olá! Gostaria de solicitar o serviço:\n• ${sec.title} — ${name} (${BRL(price)})`
-            );
-
-            list.appendChild(frag);
-        });
-
-        // observações embaixo
-        const noteEl = root.querySelector("[data-note]");
-        if (noteEl) noteEl.textContent = sec.note ? `Obs.: ${sec.note}` : "";
-
-        const footEl = root.querySelector("[data-footnote]");
-        if (footEl) footEl.textContent = sec.footnote ? sec.footnote : "";
+function getSelections() {
+    const items = [];
+    listEl.querySelectorAll('input[type="checkbox"]:checked').forEach(chk => {
+        items.push({ name: chk.dataset.name, price: parseFloat(chk.dataset.price) });
     });
+    return items;
 }
 
-/* =================== BOOT =================== */
-mountSections();
-refreshBar();
+/* =================== RENDERIZAÇÃO DO FORM =================== */
+function renderForm(sectionId, sectionLabel) {
+    CURRENT_SECTION_ID = sectionId;
+    CURRENT_SECTION_LABEL = sectionLabel;
 
-// eventos da barra/modal
-btnCheckout.onclick = checkout;
-btnViewCart.onclick = openCartDialog;
-btnClearCart.onclick = () => { if (confirm("Limpar o carrinho?")) clearCart(); };
-closeDialog.onclick = () => dialog.close();
+    const data = PRICE[sectionId] || [];
+    titleEl.textContent = `Selecionar serviços — ${sectionLabel}`;
+    listEl.innerHTML = "";
 
-/* --- helpers para preencher apenas a seção 'Depilação' --- */
-function fillDepilacaoFrom(sourceId) {
-    // pega os dados da fonte (depilacao ou depilacao-home)
-    const src = CATALOG.find(s => s.id === sourceId);
-    const targetRoot = document.querySelector('[data-section="depilacao"]');
-    if (!src || !targetRoot) return;
-
-    // título (mantemos 'Depilação'); apenas notas/footnote mudam conforme a fonte
-    const list = targetRoot.querySelector('[data-list]');
-    list.innerHTML = '';
-
-    // usa o mesmo template que você já tem
-    const rowTpl = document.getElementById('item-row-template');
-    src.items.forEach(([name, price]) => {
-        const frag = rowTpl.content.cloneNode(true);
-        const el = frag.querySelector('.item');
-        el.querySelector('.item-name').textContent = name;
-        el.querySelector('.item-price').textContent = BRL(price);
-
-        const btnAdd = el.querySelector('.icon-btn.add');
-        btnAdd.onclick = () => addToCart({ section: 'Depilação', name, price });
-
-        const aWhats = el.querySelector('.icon-btn.whats');
-        aWhats.href = buildWhatsLink(
-            `Olá! Gostaria de solicitar o serviço:\n• Depilação — ${name} (${BRL(price)})`
-        );
-
-        list.appendChild(frag);
+    data.forEach(([name, price], idx) => {
+        const row = document.createElement("label");
+        row.className = "svc-row";
+        row.innerHTML = `
+      <input type="checkbox" data-name="${name}" data-price="${price}" />
+      <div class="svc-name">${name}</div>
+      <div class="svc-price">${BRL(price)}</div>
+    `;
+        const chk = row.querySelector("input");
+        chk.addEventListener("change", calcTotal);
+        listEl.appendChild(row);
     });
 
-    // observações embaixo (usa note/footnote da fonte)
-    const noteEl = targetRoot.querySelector('[data-note]');
-    const footEl = targetRoot.querySelector('[data-footnote]');
-    noteEl.textContent = src.note ? `Obs.: ${src.note}` : '';
-    footEl.textContent = src.footnote ? src.footnote : '';
+    calcTotal();
+    if (!dlg.open) dlg.showModal();
 }
 
-/* --- inicializa o toggle --- */
-function initHomeCareToggle() {
-    const chk = document.getElementById('toggleHomeCare');
-    if (!chk) return;
-
-    // estado inicial: desligado -> usa depilacao normal
-    fillDepilacaoFrom('depilacao');
-
-    chk.addEventListener('change', () => {
-        if (chk.checked) {
-            fillDepilacaoFrom('depilacao-home');
+/* =================== FLUXO DOS CTAs =================== */
+function openServiceForm(sectionId) {
+    // Depilação pede confirmação "domiciliar?"
+    if (sectionId === "depilacao" || sectionId === "depilacao-home") {
+        const isHome = confirm("Atendimento domiciliar?");
+        if (isHome) {
+            renderForm("depilacao-home", "Depilação (Home Care)");
         } else {
-            fillDepilacaoFrom('depilacao');
+            renderForm("depilacao", "Depilação (Estúdio)");
         }
-    });
+        return;
+    }
+
+    // Demais sessões abrem direto
+    const labels = {
+        facial: "Estética Facial",
+        corporal: "Estética Corporal",
+        "sessoes-drenagem": "Sessões de Drenagem",
+        "drenagem-home": "Drenagem Linfática Home Care",
+    };
+    renderForm(sectionId, labels[sectionId] || sectionId);
 }
 
-/* --- chame isso depois do seu mountSections() atual --- */
-// Se seu código atual já pinta todas as seções, você pode:
-// 1) chamar mountSections() normalmente;
-// 2) imediatamente substituir a 'depilacao' pelo estado inicial (normal).
-document.addEventListener('DOMContentLoaded', () => {
-    // se você já chama mountSections() em outro lugar, apenas garanta:
-    // fillDepilacaoFrom('depilacao'); e initHomeCareToggle();
-    fillDepilacaoFrom('depilacao'); // estado padrão
-    initHomeCareToggle();
+/* =================== ENVIAR PARA WHATSAPP =================== */
+function submitWhats() {
+    const items = getSelections();
+    if (!items.length) {
+        alert("Selecione pelo menos um serviço.");
+        return;
+    }
+    const lines = [];
+    lines.push("Olá! Gostaria de agendar os seguintes serviços:");
+    lines.push(`${CURRENT_SECTION_LABEL}:`);
+    items.forEach(it => lines.push(`• ${it.name} — ${BRL(it.price)}`));
+    const total = items.reduce((s, i) => s + i.price, 0);
+    lines.push(`\nTotal: ${BRL(total)}`);
+
+    window.open(buildWhatsLink(lines.join("\n")), "_blank", "noopener");
+    dlg.close();
+}
+
+/* =================== BINDINGS =================== */
+document.addEventListener("DOMContentLoaded", () => {
+    // Ligar CTAs
+    document.querySelectorAll('[data-cta]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openServiceForm(btn.dataset.cta);
+        });
+    });
+
+    // Modal actions
+    btnClose.addEventListener("click", () => dlg.close());
+    btnCancel.addEventListener("click", () => dlg.close());
+    btnSubmit.addEventListener("click", submitWhats);
 });

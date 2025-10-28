@@ -1,44 +1,24 @@
-/* ===========================
-   Estética Pâmela Guimarães
-   Tema Claro — Roxo + Rosé
-   =========================== */
-
-/* Google Fonts elegantes */
+/* Paleta clara (roxo do logo + rosé) */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Marcellus&display=swap');
 
 :root {
-    /* Base clara */
     --bg: #fcfbfe;
     --surface: #ffffff;
-    --surface-2: #faf7ff;
     --line: #ece9f6;
-
-    /* Texto */
     --text: #211f2e;
     --muted: #6c6a80;
 
-    /* Acentos (logo + rosé) */
     --brand: #6E54FF;
-    /* roxo do logo */
     --brand-deep: #5b46e5;
-    /* roxo mais escuro */
     --rose: #F6E6F0;
-    /* rosé delicado (fundo) */
     --rose-2: #EBD6EA;
-    /* rosé para realces */
     --brand-soft: #E6E1FF;
-    /* roxo muito claro */
-
-    /* Estados */
-    --success: #2dbb6a;
-    --danger: #ff5c5c;
 
     --radius: 16px;
     --shadow-1: 0 8px 24px rgba(110, 84, 255, .10);
     --shadow-2: 0 12px 34px rgba(110, 84, 255, .16);
 }
 
-/* Reset básico */
 * {
     box-sizing: border-box
 }
@@ -46,27 +26,12 @@
 html,
 body {
     margin: 0;
-    
+
     color: var(--text);
     font-family: "Plus Jakarta Sans", system-ui, Segoe UI, Roboto, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
 }
 
-/* ========= Layout principal ========= */
-.container {
-    /* Mais largo para reduzir “brancos” laterais */
-    max-width: 1200px;
-    margin: 30px auto 128px;
-    padding: 0 16px;
-
-    /* Grade de seções: 2 por linha (ou mais, se couber) */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
-    gap: 18px;
-}
-
-/* ========= Header ========= */
+/* Header */
 .site-header {
     position: fixed;
     inset: 0 0 auto 0;
@@ -88,16 +53,13 @@ body {
     width: 68px;
     height: 68px;
     object-fit: contain;
-    filter: drop-shadow(0 0 14px rgba(110, 84, 255, .25));
+    filter: drop-shadow(0 0 14px rgba(110, 84, 255, .25))
 }
 
 .brand-text h1 {
     margin: 0;
-    font-size: 24px;
-    letter-spacing: .2px;
-    color: var(--brand-deep);
-    font-weight: 800;
-    font-family: "Marcellus", serif;
+    font: 800 24px/1 "Marcellus", serif;
+    color: var(--brand-deep)
 }
 
 .brand-text p {
@@ -106,328 +68,251 @@ body {
     font-size: 12px
 }
 
-.nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 0 16px 14px
+/* Faixa discreta */
+.howto {
+    max-width: 1200px;
+    margin: 104px auto 8px;
+    padding: 0 16px
 }
 
-.nav a {
-    color: var(--brand-deep);
-    text-decoration: none;
-    font-size: 13.5px;
-    font-weight: 700;
-    padding: 8px 12px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
+.howto-inner {
     background: linear-gradient(180deg, #fff, #fbfaff);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(110, 84, 255, .06);
+    padding: 10px 14px;
 }
 
-.nav a:hover {
-    border-color: #dacfff;
-    box-shadow: inset 0 0 0 999px var(--brand-soft);
+.howto-title {
+    margin: 0;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--brand-deep)
 }
 
-/* ========= Seções (cards) ========= */
-.section {
+.howto-steps {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 6px 0 0;
+    padding-left: 16px;
+    color: var(--muted);
+    font-size: 12.5px
+}
+
+.howto-steps li {
+    margin: 0
+}
+
+/* Grid das sessões */
+.sections {
+    max-width: 1200px;
+    margin: 16px auto 96px;
+    padding: 0 16px;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    margin-top: 8%;
+}
+
+/* Card de sessão (“pitch”) */
+.pitch {
+
+    grid-template-columns: 1fr minmax(60px, 120px);
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 20px;
+    border-radius: 20px;
     box-shadow: var(--shadow-1);
+    overflow: hidden;
+}
+
+.pitch-body {
+    padding: 20px
+}
+
+.pitch h2 {
+    margin: 0 0 6px;
+    font: 800 22px/1.2 "Marcellus", serif;
+    color: var(--brand-deep)
+}
+
+.pitch .lead {
+    margin: 0 0 10px;
+    color: #3a3659;
+    font-weight: 700
+}
+
+.bullets {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+    line-height: 1.5
+}
+
+.bullets li {
+    margin: 4px 0
+}
+
+/* Lateral decorativa */
+.pitch-aside {
+    background: linear-gradient(180deg, #fff, #fbfaff);
+    border-left: 1px solid var(--line)
+}
+
+.soft-rose {
+    background: linear-gradient(180deg, #fff, var(--rose))
+}
+
+.soft-purple {
+    background: linear-gradient(180deg, #fff, var(--brand-soft))
+}
+
+/* CTA */
+.btn.cta {
+    display: inline-block;
+    margin-top: 12px;
+    background: linear-gradient(180deg, #22c55e, #16a34a);
+    /* verde (já no padrão mobile) */
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    padding: 12px 18px;
+    border-radius: 14px;
+    box-shadow: 0 10px 20px rgba(34, 197, 94, .18);
+}
+
+.btn.cta:hover {
+    filter: brightness(1.05)
+}
+
+/* Footer simples */
+.site-footer {
+    max-width: 1200px;
+    margin: 0 auto 24px;
+    padding: 0 16px;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center
+}
+
+/* Responsivo */
+@media (max-width:760px) {
+    .sections {
+        margin-top: 30%;
+    }
+    .pitch {
+        grid-template-columns: 1fr
+    }
+
+    /* empilha a faixa decorativa */
+    .pitch-aside {
+        display: none
+    }
+}
+
+/* ===== Modal de serviços ===== */
+#serviceDialog {
+    width: min(720px, 94vw);
+    border: none;
+    border-radius: 18px;
+    padding: 0;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-2);
+}
+
+#serviceDialog::backdrop {
+    background: rgba(33, 31, 46, .35)
+}
+
+.svc {
     display: flex;
     flex-direction: column;
-    min-height: 220px;
+    max-height: 80vh
 }
 
-.section h2 {
-    margin: 0 0 12px;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--brand-deep);
-    font-family: "Marcellus", serif;
-}
-
-.section h2::after {
-    content: "";
-    display: block;
-    height: 2px;
-    margin-top: 10px;
-    background:
-        linear-gradient(90deg, transparent, var(--rose-2), transparent),
-        linear-gradient(90deg, transparent, var(--brand-soft), transparent);
-}
-
-/* Observações embaixo SEMPRE */
-.note {
-    margin: 10px 2px 0;
-    color: #585672;
-    font-size: 13px;
-}
-
-.note.foot {
-    color: #4b4965
-}
-
-/* ========= Lista de serviços ========= */
-.list {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 10px;
-    align-items: center;
-}
-
-.item {
-    display: contents
-}
-
-.item-name {
-    padding: 12px;
-    border-radius: 12px;
-    
-    
-    font-weight: 700;
-}
-
-.item-price {
-    padding: 12px 12px;
-    text-align: right;
-    color: #3e3a5d;
-    font-weight: 800;
-}
-
-/* Ações do item (mantendo seus tamanhos de ícone) */
-.item-actions {
+.svc-head {
     display: flex;
-    gap: 10px;
-    justify-self: end;
-    padding: 6px 8px
-}
-
-.icon-btn {
-    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid var(--line);
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
     background: linear-gradient(180deg, #fff, #fbfaff);
+}
+
+.svc-head h3 {
+    margin: 0;
+    font: 800 18px/1.2 "Marcellus", serif;
+    color: var(--brand-deep)
+}
+
+.svc-close {
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
     cursor: pointer;
-    transition: transform .06s ease, box-shadow .2s ease, border .2s ease;
+    color: #7a78a0;
+    padding: 6px 8px;
+    border-radius: 10px;
 }
 
-.icon-btn img {
-    width: 45px;
-    height: 40px;
-    object-fit: contain;
-    display: block
+.svc-close:hover {
+    background: #f1effc;
+    color: #5b46e5
 }
 
-/* mantido como você definiu */
-.icon-btn:hover {
-    border-color: #d9d1ff;
-    box-shadow: 0 0 0 3px rgba(110, 84, 255, .12)
+.svc-list {
+    padding: 12px 16px;
+    overflow: auto;
+    display: grid;
+    gap: 10px;
 }
 
-.icon-btn.add {
-    margin-right: 6px
+.svc-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: linear-gradient(180deg, #fff, #fbfaff);
 }
 
-.icon-btn.whats {
-    background: linear-gradient(180deg, #e9fff0, #dbffe9);
-    border-color: #b5f2c8
+.svc-row input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--brand)
 }
 
-/* ========= Barra do carrinho ========= */
-.cart-bar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 15;
-    background: linear-gradient(180deg, #ffffff .9, #fbf8ff .95);
-    backdrop-filter: blur(8px);
-    border-top: 1px solid var(--line);
-    box-shadow: var(--shadow-2);
+.svc-name {
+    font-weight: 700;
+    color: #3a3659;
+}
+
+.svc-price {
+    font-weight: 800;
+    color: #3e3a5d
+}
+
+.svc-foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     padding: 12px 16px;
-}
-
-.cart-info {
-    font-size: 14.5px;
-    color: var(--brand-deep);
-    font-weight: 700
-}
-
-.cart-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap
-}
-
-/* Botões textuais (apenas na barra/modal) */
-.btn {
-    border: none;
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-weight: 800;
-    cursor: pointer;
-    font-family: "Plus Jakarta Sans", sans-serif;
-}
-
-.btn.primary {
-    color: #fff;
-    background: #1b9f12;
-}
-
-.btn.ghost {
+    border-top: 1px solid var(--line);
     background: linear-gradient(180deg, #fff, #fbfaff);
-    color: var(--brand-deep);
-    border: 1px solid var(--line)
 }
 
-.btn.danger {
-    background: linear-gradient(180deg, #ff6f6f, #ff4d4d);
-    color: #fff
+.svc-total {
+    font-weight: 800;
+    color: var(--brand-deep)
 }
 
-/* ========= Modal do carrinho ========= */
-dialog {
-    width: min(720px, 92vw);
-    border: none;
-    border-radius: 18px;
-    padding: 20px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-2);
-    color: var(--text);
-}
-
-dialog::backdrop {
-    background: rgba(110, 84, 255, .25)
-}
-
-#cartList {
-    margin: 14px 0;
-    display: grid;
+.svc-actions {
+    display: flex;
     gap: 10px
 }
-
-.cart-row {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: 10px;
-    align-items: center;
-    background: linear-gradient(180deg, #fff, #fbfaff);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 12px;
-}
-
-.cart-row .remove {
-    background: linear-gradient(180deg, #ffe9e9, #ffdede);
-    color: #9b2d2d;
-    border: 1px solid #ffd1d1;
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-/* ========= Responsivo ========= */
-@media (max-width: 1100px) {
-    .container {
-        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-    }
-}
-
-@media (max-width: 700px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
-
-    .list {
-        grid-template-columns: 1fr auto;
-        grid-auto-rows: auto
-    }
-
-    .item-actions {
-        grid-column: 1 / -1;
-        justify-content: flex-end
-    }
-
-    .nav {
-        overflow: auto;
-        white-space: nowrap
-    }
-
-    .brand-text h1 {
-        font-size: 20px
-    }
-}
-
-
-/* ===== Faixa de instruções abaixo do header (discreta) ===== */
-.howto{
-  margin: 108px auto 8px;        /* abaixo do header fixo */
-  max-width: 1200px;
-  padding: 0 16px;
-}
-.howto-inner{
-  background: linear-gradient(180deg,#fff,#fbfaff);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(110,84,255,.06);
-  padding: 10px 14px;
-}
-.howto-title{
-  margin: 0;
-  font-weight: 800;
-  font-size: 13px;
-  color: #5b46e5;
-  letter-spacing: .2px;
-}
-.howto-steps{
-  display: flex; gap: 16px; flex-wrap: wrap;
-  margin: 6px 0 0; padding-left: 16px; color: var(--muted);
-  font-size: 12.5px;
-}
-.howto-steps li{ margin: 0 }
-
-/* ===== Toggle 'Atendimento domiciliar?' no título ===== */
-.section h2{
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 10px;
-}
-.homecare-toggle{
-  display: inline-flex; align-items: center; gap: 8px;
-  user-select: none; cursor: pointer;
-}
-.homecare-toggle .label{
-  font-size: 12.5px; color: #59577a; font-weight: 700;
-}
-.homecare-toggle input{ position: absolute; opacity: 0; pointer-events: none; }
-.homecare-toggle .switch{
-  width: 44px; height: 24px; border-radius: 999px;
-  background: #e9e6ff; border: 1px solid #dcd6ff; position: relative;
-  transition: background .2s ease, border-color .2s ease;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,.04);
-}
-.homecare-toggle .switch::after{
-  content:""; width: 18px; height: 18px; border-radius: 50%;
-  background:#fff; position:absolute; top: 50%; left: 3px; transform: translateY(-50%);
-  box-shadow: 0 2px 6px rgba(0,0,0,.15);
-  transition: left .2s ease;
-}
-.homecare-toggle input:checked + .switch{
-  background: #bbf7d0; border-color:#86efac;   /* verdinho ligado */
-}
-.homecare-toggle input:checked + .switch::after{ left: 23px; }
-
-/* Opcional: esconder a seção HTML 'Depilação Home Care' (usamos só como fonte de dados) */
-#depilacao-home{ display: none; }

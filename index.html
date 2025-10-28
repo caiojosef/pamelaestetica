@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Estética Pâmela Guimarães</title>
     <link rel="stylesheet" href="styles.css" />
-    <meta name="description" content="Serviços de estética e agendamento via WhatsApp." />
+    <meta name="description" content="Estética Pâmela Guimarães — beleza, cuidado e bem-estar." />
 </head>
 
 <body>
-    <!-- Header / Logo -->
+    <!-- Header fixo -->
     <header class="site-header">
         <div class="brand">
             <img src="logo.png" alt="Estética Pâmela Guimarães" />
@@ -19,121 +19,143 @@
                 <p>Beleza, cuidado e bem-estar</p>
             </div>
         </div>
-        <!-- <nav class="nav">
-            <a href="#depilacao">Depilação</a>
-            <a href="#depilacao-home">Depilação Home Care</a>
-            <a href="#facial">Estética Facial</a>
-            <a href="#corporal">Estética Corporal</a>
-            <a href="#sessoes-drenagem">Sessões de Drenagem</a>
-            <a href="#drenagem-home">Drenagem Linfática Home Care</a>
-        </nav> -->
     </header>
-    <!-- Faixa de instruções discreta -->
-    <section class="howto" aria-label="Como usar o site">
-        <div class="howto-inner">
-            <p class="howto-title">Como funciona</p>
-            <ul class="howto-steps">
-                <li>Toque no carrinho <strong>+</strong> para adicionar um serviço.</li>
-                <br>
-                <li>Use o ícone do WhatsApp para solicitar <em>somente aquele</em> serviço.</li>
-                <br>
-                <li>O carrinho fica fixo embaixo — veja itens e finalize pelo WhatsApp.</li>
-            </ul>
-        </div>
+
+    <!-- Faixa discreta de instruções -->
+
     </section>
 
+    <!-- Sessões de venda (SEM tabelas por enquanto) -->
+    <main class="sections">
 
-    <main class="container">
-        <!-- ============ Seções (estrutura fixa) ============ -->
-        <section class="section" id="depilacao" data-section="depilacao">
-            <h2>
-                <span>Depilação</span>
-                <!-- ADD: toggle de atendimento domiciliar -->
-                <label class="homecare-toggle">
-                    <input type="checkbox" id="toggleHomeCare" />
-                    <span class="switch" aria-hidden="true"></span>
-                    <span class="label">Atendimento domiciliar?</span>
-                </label>
-            </h2>
-            <div class="list" data-list></div>
-            <p class="note" data-note></p>
-            <p class="note foot" data-footnote></p>
-        </section>
-
-        <section class="section" id="depilacao-home" data-section="depilacao-home">
-            <h2><span>Depilação Home Care</span></h2>
-            <div class="list" data-list></div>
-            <p class="note" data-note></p>
-            <p class="note foot" data-footnote></p>
+        <!-- Depilação -->
+        <section class="pitch" id="sess-depilacao">
+            <div class="pitch-body">
+                <h2>Depilação</h2>
+                <p class="lead">
+                    Pele lisa por mais tempo, com técnica segura e acabamento delicado.
+                </p>
+                <ul class="bullets">
+                    <li>Procedimentos higiênicos, materiais esterilizados e cuidado com a pele.</li>
+                    <li>Menos pelos encravados e textura mais uniforme ao toque.</li>
+                    <li>Protocolos rápidos, praticamente sem resíduos e com orientações pós-procedimento.</li>
+                </ul>
+                <a href="#" class="btn cta" data-cta="depilacao">Aperte aqui e agende já</a>
+            </div>
 
         </section>
 
-        <section class="section" id="facial" data-section="facial">
-            <h2><span>Estética Facial</span></h2>
-            <div class="list" data-list></div>
-            <p class="note" data-note></p>
-            <p class="note foot" data-footnote></p>
+        <!-- Depilação Home Care -->
+        <section class="pitch" id="sess-depilacao-home">
+            <div class="pitch-body">
+                <h2>Depilação Home Care</h2>
+                <p class="lead">
+                    Todo conforto do estúdio <em>na sua casa</em>: privacidade, praticidade e segurança.
+                </p>
+                <ul class="bullets">
+                    <li>Atendimento domiciliar com kit individual e biossegurança reforçada.</li>
+                    <li>Ideal para agendas corridas, gestantes e pós-operatório.</li>
+                    <li>Mesmo padrão de resultado, sem deslocamentos ou espera.</li>
+                </ul>
+                <a href="#" class="btn cta" data-cta="depilacao-home">Aperte aqui e agende já</a>
+            </div>
+
         </section>
 
-        <section class="section" id="corporal" data-section="corporal">
-            <h2><span>Estética Corporal</span></h2>
-            <div class="list" data-list></div>
-            <p class="note" data-note></p>
-            <p class="note foot" data-footnote></p>
+        <!-- Estética Facial -->
+        <section class="pitch" id="sess-facial">
+            <div class="pitch-body">
+                <h2>Estética Facial</h2>
+                <p class="lead">
+                    Limpeza profunda, hidratação intensa e viço imediato para renovar sua pele.
+                </p>
+                <ul class="bullets">
+                    <li>Remoção de impurezas e controle de oleosidade.</li>
+                    <li>Hidratação inteligente para maciez e glow natural.</li>
+                    <li>Produtos profissionais e avaliação personalizada.</li>
+                </ul>
+                <a href="#" class="btn cta" data-cta="facial">Aperte aqui e agende já</a>
+            </div>
+            <div class="pitch-aside soft-rose"></div>
         </section>
 
-        <section class="section" id="sessoes-drenagem" data-section="sessoes-drenagem">
-            <h2><span>Sessões de Drenagem</span></h2>
-            <div class="list" data-list></div>
-            <p class="note" data-note></p>
-            <p class="note foot" data-footnote></p>
+        <!-- Estética Corporal -->
+        <section class="pitch" id="sess-corporal">
+            <div class="pitch-body">
+                <h2>Estética Corporal</h2>
+                <p class="lead">
+                    Massagens e protocolos que relaxam, modelam e melhoram o contorno corporal.
+                </p>
+                <ul class="bullets">
+                    <li>Relaxamento muscular e alívio de tensões do dia a dia.</li>
+                    <li>Estímulo da circulação e sensação de leveza imediata.</li>
+                    <li>Planos sob medida para seus objetivos.</li>
+                </ul>
+                <a href="#" class="btn cta" data-cta="corporal">Aperte aqui e agende já</a>
+            </div>
+            <div class="pitch-aside soft-purple"></div>
         </section>
 
-        <section class="section" id="drenagem-home" data-section="drenagem-home">
-            <h2><span>Drenagem Linfática Home Care</span></h2>
-            <div class="list" data-list></div>
-            <p class="note" data-note></p>
-            <p class="note foot" data-footnote></p>
+        <!-- Sessões de Drenagem -->
+        <section class="pitch" id="sess-sessoes-drenagem">
+            <div class="pitch-body">
+                <h2>Sessões de Drenagem</h2>
+                <p class="lead">
+                    Técnica manual suave que reduz retenção, melhora o inchaço e redefine o contorno.
+                </p>
+                <ul class="bullets">
+                    <li>Toque leve com ritmo preciso para estimular o sistema linfático.</li>
+                    <li>Excelente no pré/pós-operatório e em rotinas sedentárias.</li>
+                    <li>Pode ser combinada a outros cuidados estéticos.</li>
+                </ul>
+                <a href="#" class="btn cta" data-cta="sessoes-drenagem">Aperte aqui e agende já</a>
+            </div>
+            <div class="pitch-aside soft-rose"></div>
         </section>
+
+        <!-- Drenagem Linfática Home Care -->
+        <section class="pitch" id="sess-drenagem-home">
+            <div class="pitch-body">
+                <h2>Drenagem Linfática Home Care</h2>
+                <p class="lead">
+                    O bem-estar da drenagem com a comodidade do atendimento domiciliar.
+                </p>
+                <ul class="bullets">
+                    <li>Excelente para rotinas intensas, gestantes e cuidados pós-cirúrgicos.</li>
+                    <li>Materiais individualizados, biossegurança e conforto do seu espaço.</li>
+                    <li>Agendamento flexível e acompanhamento próximo.</li>
+                </ul>
+                <a href="#" class="btn cta" data-cta="drenagem-home">Aperte aqui e agende já</a>
+            </div>
+            <div class="pitch-aside soft-purple"></div>
+        </section>
+
     </main>
 
-    <!-- Template de linha (estrutura é HTML; JS só preenche) -->
-    <template id="item-row-template">
-        <div class="item">
-            <div class="item-name"></div>
-            <div class="item-price"></div>
-            <div class="item-actions">
-                <button class="icon-btn add" aria-label="Adicionar ao carrinho" title="Adicionar ao carrinho">
-                    <img src="adicionarcarrinho.png" alt="" />
-                </button>
-                <a class="icon-btn whats" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener">
-                    <img src="logowhatsapp.png" alt="" />
-                </a>
-            </div>
-        </div>
-    </template>
-    <hr>
+    <!-- Modal genérico de serviços -->
+    <dialog id="serviceDialog">
+        <form method="dialog" class="svc">
+            <header class="svc-head">
+                <h3 id="svcTitle">Selecionar serviços</h3>
+                <button class="svc-close" aria-label="Fechar">×</button>
+            </header>
 
-    <!-- Barra fixa do carrinho -->
-    <footer class="cart-bar" id="cartBar" aria-live="polite">
-        <div class="cart-info">
-            <strong id="cartCount">0</strong> item(s) — <span id="cartTotal">R$ 0,00</span>
-        </div>
-        <div class="cart-actions">
-            <button id="btnViewCart" class="btn ghost">Ver Itens</button>
-            <button id="btnClearCart" class="btn danger">Limpar</button>
-            <button id="btnCheckout" class="btn primary">Enviar no WhatsApp</button>
-        </div>
-    </footer>
+            <div id="svcList" class="svc-list" aria-live="polite"></div>
 
-    <!-- Modal simples para listar itens do carrinho -->
-    <dialog id="cartDialog">
-        <h3>Seu carrinho</h3>
-        <div id="cartList"></div>
-        <div class="dialog-actions">
-            <button id="closeDialog" class="btn ghost">fechar</button>
-        </div>
+            <footer class="svc-foot">
+                <div class="svc-total">Total: <strong id="svcTotal">R$ 0,00</strong></div>
+                <div class="svc-actions">
+                    <button class="btn ghost" id="svcCancel" value="cancel">cancelar</button>
+                    <button class="btn primary" id="svcSubmit" type="button">Agendar agora</button>
+                </div>
+            </footer>
+        </form>
     </dialog>
+
+    <!-- Footer/carrinho original pode ficar aqui (se já existir no seu projeto) -->
+    <footer class="site-footer">
+        <small>© Estética Pâmela Guimarães</small>
+    </footer>
 
     <script src="scripts.js" defer></script>
 </body>
