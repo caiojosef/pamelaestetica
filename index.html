@@ -28,11 +28,33 @@
             <a href="#drenagem-home">Drenagem Linfática Home Care</a>
         </nav> -->
     </header>
+    <!-- Faixa de instruções discreta -->
+    <section class="howto" aria-label="Como usar o site">
+        <div class="howto-inner">
+            <p class="howto-title">Como funciona</p>
+            <ul class="howto-steps">
+                <li>Toque no carrinho <strong>+</strong> para adicionar um serviço.</li>
+                <br>
+                <li>Use o ícone do WhatsApp para solicitar <em>somente aquele</em> serviço.</li>
+                <br>
+                <li>O carrinho fica fixo embaixo — veja itens e finalize pelo WhatsApp.</li>
+            </ul>
+        </div>
+    </section>
+
 
     <main class="container">
         <!-- ============ Seções (estrutura fixa) ============ -->
         <section class="section" id="depilacao" data-section="depilacao">
-            <h2><span>Depilação</span></h2>
+            <h2>
+                <span>Depilação</span>
+                <!-- ADD: toggle de atendimento domiciliar -->
+                <label class="homecare-toggle">
+                    <input type="checkbox" id="toggleHomeCare" />
+                    <span class="switch" aria-hidden="true"></span>
+                    <span class="label">Atendimento domiciliar?</span>
+                </label>
+            </h2>
             <div class="list" data-list></div>
             <p class="note" data-note></p>
             <p class="note foot" data-footnote></p>
@@ -43,7 +65,7 @@
             <div class="list" data-list></div>
             <p class="note" data-note></p>
             <p class="note foot" data-footnote></p>
-            
+
         </section>
 
         <section class="section" id="facial" data-section="facial">

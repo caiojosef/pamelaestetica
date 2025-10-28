@@ -12,7 +12,6 @@ const CATALOG = [
     {
         id: "depilacao",
         title: "Depilação",
-        note: "Serviços presenciais",
         items: [
             ["Antebraço", 30],
             ["Axila", 30],
@@ -30,7 +29,7 @@ const CATALOG = [
     {
         id: "depilacao-home",
         title: "Depilação Home Care",
-        note: "Atendimento em domicílio",
+        
         items: [
             ["Antebraço", 40],
             ["Axila", 40],
@@ -211,3 +210,68 @@ btnCheckout.onclick = checkout;
 btnViewCart.onclick = openCartDialog;
 btnClearCart.onclick = () => { if (confirm("Limpar o carrinho?")) clearCart(); };
 closeDialog.onclick = () => dialog.close();
+
+/* --- helpers para preencher apenas a seção 'Depilação' --- */
+function fillDepilacaoFrom(sourceId) {
+    // pega os dados da fonte (depilacao ou depilacao-home)
+    const src = CATALOG.find(s => s.id === sourceId);
+    const targetRoot = document.querySelector('[data-section="depilacao"]');
+    if (!src || !targetRoot) return;
+
+    // título (mantemos 'Depilação'); apenas notas/footnote mudam conforme a fonte
+    const list = targetRoot.querySelector('[data-list]');
+    list.innerHTML = '';
+
+    // usa o mesmo template que você já tem
+    const rowTpl = document.getElementById('item-row-template');
+    src.items.forEach(([name, price]) => {
+        const frag = rowTpl.content.cloneNode(true);
+        const el = frag.querySelector('.item');
+        el.querySelector('.item-name').textContent = name;
+        el.querySelector('.item-price').textContent = BRL(price);
+
+        const btnAdd = el.querySelector('.icon-btn.add');
+        btnAdd.onclick = () => addToCart({ section: 'Depilação', name, price });
+
+        const aWhats = el.querySelector('.icon-btn.whats');
+        aWhats.href = buildWhatsLink(
+            `Olá! Gostaria de solicitar o serviço:\n• Depilação — ${name} (${BRL(price)})`
+        );
+
+        list.appendChild(frag);
+    });
+
+    // observações embaixo (usa note/footnote da fonte)
+    const noteEl = targetRoot.querySelector('[data-note]');
+    const footEl = targetRoot.querySelector('[data-footnote]');
+    noteEl.textContent = src.note ? `Obs.: ${src.note}` : '';
+    footEl.textContent = src.footnote ? src.footnote : '';
+}
+
+/* --- inicializa o toggle --- */
+function initHomeCareToggle() {
+    const chk = document.getElementById('toggleHomeCare');
+    if (!chk) return;
+
+    // estado inicial: desligado -> usa depilacao normal
+    fillDepilacaoFrom('depilacao');
+
+    chk.addEventListener('change', () => {
+        if (chk.checked) {
+            fillDepilacaoFrom('depilacao-home');
+        } else {
+            fillDepilacaoFrom('depilacao');
+        }
+    });
+}
+
+/* --- chame isso depois do seu mountSections() atual --- */
+// Se seu código atual já pinta todas as seções, você pode:
+// 1) chamar mountSections() normalmente;
+// 2) imediatamente substituir a 'depilacao' pelo estado inicial (normal).
+document.addEventListener('DOMContentLoaded', () => {
+    // se você já chama mountSections() em outro lugar, apenas garanta:
+    // fillDepilacaoFrom('depilacao'); e initHomeCareToggle();
+    fillDepilacaoFrom('depilacao'); // estado padrão
+    initHomeCareToggle();
+});

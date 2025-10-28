@@ -57,7 +57,7 @@ body {
 .container {
     /* Mais largo para reduzir “brancos” laterais */
     max-width: 1200px;
-    margin: 148px auto 128px;
+    margin: 30px auto 128px;
     padding: 0 16px;
 
     /* Grade de seções: 2 por linha (ou mais, se couber) */
@@ -371,3 +371,63 @@ dialog::backdrop {
     }
 }
 
+
+/* ===== Faixa de instruções abaixo do header (discreta) ===== */
+.howto{
+  margin: 108px auto 8px;        /* abaixo do header fixo */
+  max-width: 1200px;
+  padding: 0 16px;
+}
+.howto-inner{
+  background: linear-gradient(180deg,#fff,#fbfaff);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(110,84,255,.06);
+  padding: 10px 14px;
+}
+.howto-title{
+  margin: 0;
+  font-weight: 800;
+  font-size: 13px;
+  color: #5b46e5;
+  letter-spacing: .2px;
+}
+.howto-steps{
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin: 6px 0 0; padding-left: 16px; color: var(--muted);
+  font-size: 12.5px;
+}
+.howto-steps li{ margin: 0 }
+
+/* ===== Toggle 'Atendimento domiciliar?' no título ===== */
+.section h2{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+}
+.homecare-toggle{
+  display: inline-flex; align-items: center; gap: 8px;
+  user-select: none; cursor: pointer;
+}
+.homecare-toggle .label{
+  font-size: 12.5px; color: #59577a; font-weight: 700;
+}
+.homecare-toggle input{ position: absolute; opacity: 0; pointer-events: none; }
+.homecare-toggle .switch{
+  width: 44px; height: 24px; border-radius: 999px;
+  background: #e9e6ff; border: 1px solid #dcd6ff; position: relative;
+  transition: background .2s ease, border-color .2s ease;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.04);
+}
+.homecare-toggle .switch::after{
+  content:""; width: 18px; height: 18px; border-radius: 50%;
+  background:#fff; position:absolute; top: 50%; left: 3px; transform: translateY(-50%);
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+  transition: left .2s ease;
+}
+.homecare-toggle input:checked + .switch{
+  background: #bbf7d0; border-color:#86efac;   /* verdinho ligado */
+}
+.homecare-toggle input:checked + .switch::after{ left: 23px; }
+
+/* Opcional: esconder a seção HTML 'Depilação Home Care' (usamos só como fonte de dados) */
+#depilacao-home{ display: none; }
