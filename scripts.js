@@ -35,14 +35,22 @@ const PRICE = {
     ],
 };
 
-/* =================== MODAL ELEMENTOS =================== */
+/* =================== MODAIS: ELEMENTOS =================== */
+// Formulário de serviços
 const dlg = document.getElementById("serviceDialog");
 const listEl = document.getElementById("svcList");
 const titleEl = document.getElementById("svcTitle");
 const totalEl = document.getElementById("svcTotal");
+const warnEl = document.getElementById("svcWarn");
 const btnClose = document.querySelector(".svc-close");
 const btnCancel = document.getElementById("svcCancel");
 const btnSubmit = document.getElementById("svcSubmit");
+
+// Seletor Presencial / Domiciliar
+const typeDlg = document.getElementById("typeDialog");
+const btnTypePres = document.getElementById("btnTypePresencial");
+const btnTypeHome = document.getElementById("btnTypeHome");
+const btnTypeClose = document.querySelector("#typeDialog .type-close");
 
 /* Estado atual do formulário */
 let CURRENT_SECTION_ID = null;
@@ -67,6 +75,16 @@ function getSelections() {
     });
     return items;
 }
+function showWarn(msg) {
+    warnEl.textContent = msg;
+    warnEl.hidden = false;
+    // feedback visual na lista
+    listEl.animate([{ transform: "scale(1)" }, { transform: "scale(1.01)" }, { transform: "scale(1)" }],
+        { duration: 220, easing: "ease-out" });
+    // some depois de um tempo
+    clearTimeout(showWarn._t);
+    showWarn._t = setTimeout(() => { warnEl.hidden = true; }, 2400);
+}
 
 /* =================== RENDERIZAÇÃO DO FORM =================== */
 function renderForm(sectionId, sectionLabel) {
@@ -75,9 +93,10 @@ function renderForm(sectionId, sectionLabel) {
 
     const data = PRICE[sectionId] || [];
     titleEl.textContent = `Selecionar serviços — ${sectionLabel}`;
+    warnEl.hidden = true;
     listEl.innerHTML = "";
 
-    data.forEach(([name, price], idx) => {
+    data.forEach(([name, price]) => {
         const row = document.createElement("label");
         row.className = "svc-row";
         row.innerHTML = `
@@ -95,18 +114,14 @@ function renderForm(sectionId, sectionLabel) {
 }
 
 /* =================== FLUXO DOS CTAs =================== */
+function openTypeSelector() { if (!typeDlg.open) typeDlg.showModal(); }
+
 function openServiceForm(sectionId) {
-    // Depilação pede confirmação "domiciliar?"
+    // Depilação sempre pergunta o tipo (sem confirm)
     if (sectionId === "depilacao" || sectionId === "depilacao-home") {
-        const isHome = confirm("Atendimento domiciliar?");
-        if (isHome) {
-            renderForm("depilacao-home", "Depilação (Home Care)");
-        } else {
-            renderForm("depilacao", "Depilação (Estúdio)");
-        }
+        openTypeSelector();
         return;
     }
-
     // Demais sessões abrem direto
     const labels = {
         facial: "Estética Facial",
@@ -121,7 +136,7 @@ function openServiceForm(sectionId) {
 function submitWhats() {
     const items = getSelections();
     if (!items.length) {
-        alert("Selecione pelo menos um serviço.");
+        showWarn("Selecione pelo menos um serviço.");
         return;
     }
     const lines = [];
@@ -137,7 +152,7 @@ function submitWhats() {
 
 /* =================== BINDINGS =================== */
 document.addEventListener("DOMContentLoaded", () => {
-    // Ligar CTAs
+    // Ligar CTAs (apenas uma vez)
     document.querySelectorAll('[data-cta]').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -145,8 +160,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Modal actions
+    // Modal serviços
     btnClose.addEventListener("click", () => dlg.close());
     btnCancel.addEventListener("click", () => dlg.close());
     btnSubmit.addEventListener("click", submitWhats);
+
+    // Modal tipo
+    btnTypePres.addEventListener("click", () => {
+        typeDlg.close();
+        renderForm("depilacao", "Depilação (Estúdio)");
+    });
+    btnTypeHome.addEventListener("click", () => {
+        typeDlg.close();
+        renderForm("depilacao-home", "Depilação (Home Care)");
+    });
+    btnTypeClose.addEventListener("click", () => typeDlg.close());
 });

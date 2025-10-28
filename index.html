@@ -152,6 +152,43 @@
         </form>
     </dialog>
 
+    <!-- Modal: escolher tipo de atendimento -->
+    <dialog id="typeDialog">
+        <form method="dialog" class="type">
+            <button class="type-close" aria-label="Fechar" title="Fechar">×</button>
+            <h3 class="type-title">Qual o tipo do atendimento?</h3>
+            <p class="type-sub">Escolha uma opção para continuar:</p>
+
+            <div class="type-actions">
+                <button type="button" id="btnTypePresencial" class="btn type primary">Presencial</button>
+                <button type="button" id="btnTypeHome" class="btn type home">Domiciliar</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Modal genérico de serviços -->
+    <dialog id="serviceDialog">
+        <form method="dialog" class="svc">
+            <header class="svc-head">
+                <h3 id="svcTitle">Selecionar serviços</h3>
+                <button class="svc-close" aria-label="Fechar">×</button>
+            </header>
+
+            <!-- AVISO inline (fica oculto até ser necessário) -->
+            <p id="svcWarn" class="svc-warn" hidden>Selecione pelo menos um serviço.</p>
+
+            <div id="svcList" class="svc-list" aria-live="polite"></div>
+
+            <footer class="svc-foot">
+                <div class="svc-total">Total: <strong id="svcTotal">R$ 0,00</strong></div>
+                <div class="svc-actions">
+                    <button class="btn ghost" id="svcCancel" value="cancel">cancelar</button>
+                    <button class="btn primary" id="svcSubmit" type="button">Agendar agora</button>
+                </div>
+            </footer>
+        </form>
+    </dialog>
+
     <!-- Footer/carrinho original pode ficar aqui (se já existir no seu projeto) -->
     <footer class="site-footer">
         <small>© Estética Pâmela Guimarães</small>
